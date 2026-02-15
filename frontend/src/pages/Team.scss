@@ -1,0 +1,1001 @@
+.team {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background: #f8f9fa;
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    background: #fff;
+    border-bottom: 1px solid #e5e7eb;
+  }
+
+  // Stats Section
+  &__stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 1rem;
+    padding: 1rem;
+    flex-shrink: 0;
+  }
+
+  &__stat-card {
+    background: #fff;
+    border-radius: 12px;
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.875rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+    transition: all 0.2s;
+  }
+
+  &__stat-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+
+    svg {
+      font-size: 1.25rem;
+    }
+
+    &--total {
+      background: linear-gradient(135deg, #eef2ff 0%, #e0e7ff 100%);
+      color: #4f46e5;
+    }
+
+    &--payment {
+      background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+      color: #92400e;
+    }
+
+    &--paid {
+      background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+      color: #047857;
+    }
+
+    &--pending {
+      background: linear-gradient(135deg, #fff1f2 0%, #fee2e2 100%);
+      color: #b91c1c;
+    }
+  }
+
+  &__stat-info {
+    min-width: 0;
+
+    h3 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #1f2937;
+      margin: 0 0 0.125rem;
+      line-height: 1.2;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    p {
+      font-size: 0.75rem;
+      color: #6b7280;
+      margin: 0;
+      white-space: nowrap;
+    }
+  }
+
+  &__search {
+    padding: 0.75rem 1rem;
+    background: transparent;
+    border-bottom: 1px solid #eef2f7;
+    display: flex;
+    justify-content: center;
+
+    input {
+      width: 100%;
+      max-width: 520px;
+      padding: 0.6rem 0.75rem;
+      border-radius: 8px;
+      border: 1px solid #e5e7eb;
+      outline: none;
+      font-size: 0.95rem;
+    }
+  }
+
+  &__title {
+    font-size: 1.75rem;
+    font-weight: 600;
+    color: #1f2937;
+    margin: 0;
+    display: flex;
+    align-items: center;
+
+    svg {
+      color: #6366f1;
+      font-size: 2rem;
+      margin-right: 0.5rem;
+    }
+  }
+
+  td:first-child,
+  th:first-child {
+    width: 120px;
+    font-family:
+      ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono", "Courier New",
+      monospace;
+    color: #374151;
+  }
+
+  &__subtitle {
+    font-size: 0.875rem;
+    color: #6b7280;
+    margin-top: 0.5rem;
+  }
+
+  &__grid {
+    display: grid;
+    /* Use auto-fit and a fixed max width so items don't stretch to fill the row.
+       This lets a single (or few) cards stay centered instead of left-aligned. */
+    grid-template-columns: repeat(auto-fit, minmax(280px, 320px));
+    justify-content: center;
+    gap: 1.5rem;
+    padding: 1rem;
+  }
+
+  .team__empty {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 1rem 0.5rem;
+    color: #6b7280;
+  }
+}
+
+/* Team Card */
+.team-card {
+  position: relative;
+  background: #f4f4f8;
+  box-shadow: 0 5px 5px rgba(0, 0, 0, 0.5);
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
+  padding: 2rem;
+  text-align: center;
+  transition: all 0.3s;
+  cursor: pointer;
+
+  &:hover {
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  }
+
+  /* 3-dot menu at top right */
+  &__menu {
+    position: absolute;
+    top: 0.75rem;
+    right: 0.75rem;
+    z-index: 10;
+  }
+
+  &__menu-button {
+    background: transparent;
+    border: none;
+    color: #6b7280;
+    font-size: 1.2rem;
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+
+    &:hover {
+      background: rgba(0, 0, 0, 0.05);
+      color: #374151;
+    }
+  }
+
+  &__dropdown {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    min-width: 150px;
+    overflow: hidden;
+    margin-top: 0.25rem;
+    z-index: 100;
+
+    .dropdown-item {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      background: transparent;
+      border: none;
+      text-align: left;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.9rem;
+      color: #374151;
+      transition: background 0.2s;
+
+      svg {
+        font-size: 0.875rem;
+      }
+
+      &:hover {
+        background: #f3f4f6;
+      }
+
+      &--danger {
+        color: #ef4444;
+
+        &:hover {
+          background: #fef2f2;
+        }
+      }
+    }
+  }
+
+  &__avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    font-weight: 700;
+    margin: 0 auto 1rem;
+  }
+
+  &__name {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #1f2937;
+    margin: 0 0 0.5rem;
+  }
+
+  &__role {
+    color: #6366f1;
+    font-weight: 500;
+    margin: 0 0 0.5rem;
+  }
+
+  &__email,
+  &__phone {
+    color: #6b7280;
+    font-size: 0.9rem;
+    margin: 0 0 1rem;
+  }
+
+  &__payment-summary {
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid #e5e7eb;
+
+    h4 {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #374151;
+      margin: 0 0 0.75rem;
+    }
+
+    .payment-stats {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+
+      .stat {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 0.875rem;
+
+        .label {
+          color: #6b7280;
+        }
+
+        .value {
+          font-weight: 600;
+
+          &.total {
+            color: #374151;
+          }
+
+          &.paid {
+            color: #10b981;
+          }
+
+          &.pending {
+            color: #f59e0b;
+          }
+        }
+      }
+    }
+
+    .payment-count {
+      margin-top: 0.5rem;
+      font-size: 0.8rem;
+      color: #9ca3af;
+      text-align: center;
+    }
+  }
+
+  &__payments {
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid #e5e7eb;
+    text-align: left;
+
+    h4 {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #374151;
+      margin: 0 0 0.75rem;
+    }
+
+    .payment-item {
+      background: #f9fafb;
+      padding: 0.75rem;
+      border-radius: 6px;
+      margin-bottom: 0.75rem;
+      border: 1px solid #e5e7eb;
+
+      .payment-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 0.5rem;
+
+        .event-name {
+          font-weight: 600;
+          font-size: 0.875rem;
+          color: #374151;
+        }
+
+        .payment-status {
+          font-size: 0.75rem;
+          padding: 0.25rem 0.5rem;
+          border-radius: 4px;
+          font-weight: 600;
+          text-transform: uppercase;
+
+          &.status-paid {
+            background: #d1fae5;
+            color: #065f46;
+          }
+
+          &.status-pending {
+            background: #fef3c7;
+            color: #92400e;
+          }
+
+          &.status-partial {
+            background: #dbeafe;
+            color: #1e40af;
+          }
+        }
+      }
+
+      .payment-details {
+        display: flex;
+        justify-content: space-between;
+        font-size: 0.85rem;
+        color: #6b7280;
+        margin-bottom: 0.5rem;
+
+        .amount {
+          font-weight: 600;
+          color: #059669;
+          font-size: 0.95rem;
+        }
+      }
+
+      .payment-notes {
+        font-size: 0.8rem;
+        color: #6b7280;
+        margin: 0.5rem 0;
+        font-style: italic;
+      }
+
+      .payment-actions {
+        display: flex;
+        gap: 0.5rem;
+        margin-top: 0.5rem;
+
+        button {
+          font-size: 0.75rem;
+          padding: 0.25rem 0.5rem;
+          border: none;
+          border-radius: 4px;
+          cursor: pointer;
+          font-weight: 600;
+          transition: all 0.2s;
+        }
+
+        .btn-status-change {
+          background: #10b981;
+          color: #fff;
+
+          &:hover {
+            background: #059669;
+          }
+        }
+
+        .btn-delete-payment {
+          background: #ef4444;
+          color: #fff;
+
+          &:hover {
+            background: #dc2626;
+          }
+        }
+      }
+    }
+
+    .more-payments {
+      text-align: center;
+      font-size: 0.8rem;
+      color: #9ca3af;
+      margin: 0;
+    }
+  }
+}
+
+/* Compact action buttons within team cards */
+.team-card__actions {
+  display: flex;
+  gap: 0.4rem;
+  justify-content: space-between;
+  margin-top: 1rem;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.team-card__actions .btn-primary:hover,
+.team-card__actions .btn-primary:active {
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+.team-card__actions .btn-primary {
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  border: none;
+  font-size: 1.05rem;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.team-card__actions .btn-edit {
+  background: #ecfdf5; /* light green */
+  color: #10b981 !important;
+}
+
+.team-card__actions .btn-whatsapp {
+  background: #dcfce7; /* light green for WhatsApp */
+  color: #16a34a !important;
+}
+
+.team-card__actions .btn-view-payments {
+  background: #fce5da; /* light blue */
+  color: #f6763b !important;
+}
+
+.team-card__actions .btn-add-payment {
+  background: #dce8fc; /* light blue */
+  color: #3b82f6 !important;
+}
+
+.team-card__actions .btn-edit,
+.team-card__actions .btn-whatsapp,
+.team-card__actions .btn-view-payments,
+.team-card__actions .btn-add-payment,
+.team-card__actions .btn-delete {
+  &:hover,
+  &:focus,
+  &:active {
+    outline: none !important;
+    box-shadow: none !important;
+    background: none !important;
+  }
+}
+
+/* Forms */
+.team-form {
+  display: flex;
+  flex-direction: column;
+
+  &__label {
+    font-weight: 600;
+    margin: 0.5rem 0 0.25rem;
+    color: #374151;
+  }
+
+  &__input {
+    padding: 0.6rem 0.75rem;
+    border-radius: 6px;
+    border: 1px solid #e5e7eb;
+    outline: none;
+    font-size: 0.95rem;
+  }
+
+  &__error {
+    color: #ef4444;
+    font-size: 0.85rem;
+    margin-top: 0.25rem;
+  }
+
+  textarea.team-form__input {
+    resize: vertical;
+    font-family: inherit;
+  }
+}
+
+/* Primary button (used across cards, forms, modals) */
+.btn-primary {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: #6366f1;
+  color: #fff;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+
+  &:hover {
+    background: #4f46e5;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+  }
+}
+
+/* Modal actions */
+.modal-actions {
+  display: flex;
+  gap: 0.5rem;
+  margin: 1rem 0;
+  align-items: center;
+  width: 100%;
+
+  .btn-cancel {
+    order: 0;
+    color: #1f2937;
+    background: none !important;
+    border: 1px solid #d1d5db;
+  }
+
+  .btn-primary:not(.btn-cancel) {
+    order: 1;
+    margin-left: auto;
+  }
+}
+
+.btn-cancel {
+  background: #6b7280 !important;
+}
+
+/* Payments table & scrollable area */
+.payments-table {
+  width: 100%;
+  margin-bottom: 1rem;
+
+  p {
+    text-align: center;
+  }
+
+  &-scrollable {
+    max-height: 400px;
+    overflow: auto;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.95rem;
+    min-width: 800px; // to enable horizontal scroll
+  }
+
+  th,
+  td {
+    text-align: left;
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid #e5e7eb;
+    vertical-align: middle;
+    white-space: nowrap; // prevent wrapping
+  }
+
+  th {
+    background: #f8fafc;
+    font-weight: 600;
+    color: #374151;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+  }
+
+  .payment-status {
+    text-transform: capitalize;
+    font-weight: 600;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+  }
+
+  .btn-status-change {
+    background: #10b981;
+    color: #fff;
+    border: none;
+    padding: 0.35rem 0.5rem;
+    border-radius: 4px;
+    margin-right: 0.5rem;
+    cursor: pointer;
+  }
+
+  .btn-delete-payment {
+    color: #ef4444;
+    border: none;
+    padding: 0.35rem 0.5rem;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+}
+
+/* Payments viewer header, search and stats */
+.payments-viewer__header {
+  display: flex;
+  justify-content: space-around;
+  gap: 1rem;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.payments-viewer__search {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 0.75rem;
+
+  input {
+    padding: 0.5rem 0.75rem;
+    border-radius: 8px;
+    border: 1px solid #e5e7eb;
+    width: 100%;
+    max-width: 300px;
+    font-size: 0.95rem;
+    outline: none;
+    /* keep typed text left-aligned but center the placeholder text */
+    text-align: left;
+
+    &::placeholder {
+      text-align: center;
+      color: #9ca3af;
+    }
+
+    /* Vendor-prefixed placeholders for broader browser support */
+    &::-webkit-input-placeholder {
+      text-align: center;
+    }
+    &::-moz-placeholder {
+      text-align: center;
+      opacity: 1;
+    }
+    &:-ms-input-placeholder {
+      text-align: center;
+    }
+    &:-moz-placeholder {
+      text-align: center;
+    }
+  }
+}
+
+.payments-viewer__stat {
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  padding: 0.6rem 0.75rem;
+  border-radius: 8px;
+  min-width: 120px;
+  text-align: center;
+
+  .label {
+    font-size: 0.75rem;
+    color: #6b7280;
+    font-weight: 600;
+  }
+
+  .value {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #374151;
+    margin-top: 0.25rem;
+  }
+
+  .value.paid {
+    color: #10b981;
+  }
+
+  .value.pending {
+    color: #f59e0b;
+  }
+}
+
+/* Highlight for matched search substrings */
+.search-highlight {
+  background: #fff3b0;
+  color: inherit;
+  padding: 0 4px;
+  border-radius: 3px;
+}
+
+.pagination-controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 1rem;
+
+  button {
+    padding: 0.5rem 1rem;
+    border: 1px solid #d1d5db;
+    background: #fff;
+    border-radius: 4px;
+    cursor: pointer;
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    &:hover:not(:disabled) {
+      background: #f3f4f6;
+    }
+  }
+
+  span {
+    font-weight: 500;
+    color: #374151;
+  }
+}
+
+/* Responsive rules at end */
+@media (max-width: 1024px) {
+  .team {
+    &__stats {
+      grid-template-columns: repeat(4, 1fr);
+      padding: 0.875rem;
+    }
+
+    &__grid {
+      grid-template-columns: repeat(auto-fit, minmax(260px, 300px));
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .team {
+    padding: 0;
+
+    &__header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.75rem;
+      padding: 0.75rem;
+    }
+
+    &__title {
+      font-size: 1.5rem;
+    }
+
+    &__stats {
+      grid-template-columns: repeat(2, 1fr);
+      padding: 0.75rem;
+      gap: 0.75rem;
+    }
+
+    &__stat-card {
+      padding: 0.75rem;
+    }
+
+    &__stat-icon {
+      width: 38px;
+      height: 38px;
+
+      svg {
+        font-size: 1rem;
+      }
+    }
+
+    &__stat-info {
+      h3 {
+        font-size: 1rem;
+      }
+
+      p {
+        font-size: 0.7rem;
+      }
+    }
+
+    &__search {
+      padding: 0.625rem 0.75rem;
+
+      input {
+        max-width: 100%;
+      }
+    }
+
+    &__grid {
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1rem;
+      padding: 0.75rem;
+    }
+  }
+
+  .team-card {
+    padding: 1.5rem;
+
+    &__avatar {
+      width: 70px;
+      height: 70px;
+      font-size: 1.75rem;
+    }
+
+    &__name {
+      font-size: 1.1rem;
+    }
+  }
+
+  .pagination-controls {
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+}
+
+@media (max-width: 480px) {
+      .modal__content {
+        padding: 0.5rem;
+      }
+  .team {
+    &__header {
+      padding: 0.625rem;
+    }
+
+    &__title {
+      font-size: 1.35rem;
+
+      svg {
+        font-size: 1.5rem;
+      }
+    }
+
+    &__stats {
+      grid-template-columns: repeat(2, 1fr);
+      padding: 0.5rem;
+      gap: 0.5rem;
+    }
+
+    &__stat-card {
+      padding: 0.625rem;
+      gap: 0.5rem;
+    }
+
+    &__stat-icon {
+      width: 32px;
+      height: 32px;
+
+      svg {
+        font-size: 0.875rem;
+      }
+    }
+
+    &__stat-info {
+      h3 {
+        font-size: 0.875rem;
+      }
+
+      p {
+        font-size: 0.625rem;
+      }
+    }
+
+    &__subtitle {
+      font-size: 0.8rem;
+    }
+
+    &__search {
+      padding: 0.5rem 0.625rem;
+
+      input {
+        padding: 0.5rem 0.625rem;
+        font-size: 0.875rem;
+      }
+    }
+
+    &__grid {
+      grid-template-columns: 1fr;
+      gap: 0.75rem;
+      padding: 0.625rem;
+    }
+  }
+
+  .team-card {
+    padding: 1.25rem;
+
+    &__avatar {
+      width: 60px;
+      height: 60px;
+      font-size: 1.5rem;
+      margin-bottom: 0.75rem;
+    }
+
+    &__name {
+      font-size: 1.05rem;
+      margin-bottom: 0.375rem;
+    }
+
+    &__role {
+      font-size: 0.875rem;
+      margin-bottom: 0.375rem;
+    }
+
+    &__email,
+    &__phone {
+      font-size: 0.8rem;
+      margin-bottom: 0.75rem;
+    }
+
+    &__payment-summary {
+      margin-top: 1rem;
+      padding-top: 0.75rem;
+
+      h4 {
+        font-size: 0.875rem;
+      }
+
+      .payment-stats .stat {
+        font-size: 0.8rem;
+      }
+    }
+  }
+
+  .pagination-controls {
+    flex-direction: column;
+    gap: 0.5rem;
+
+    button {
+      width: 100%;
+    }
+  }
+
+  .payments-viewer__header {
+    gap: 0.5rem;
+  }
+  .payments-viewer__stat {
+    min-width: 100px;
+    padding: 0.5rem;
+
+    .label {
+      font-size: 0.7rem;
+    }
+
+    .value {
+      font-size: 0.95rem;
+    }
+  }
+}

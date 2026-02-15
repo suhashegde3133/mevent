@@ -1,0 +1,569 @@
+.dashboard {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background: #f8f9fa;
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    background: linear-gradient(to right, #c9caf7, #cac7fc);
+    gap: 1rem;
+  }
+
+  /* Date filter placed at the right end of the header */
+  &__filter {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+  }
+
+  .date-filter-btn {
+    background: rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #1f2937;
+    padding: 0.35rem 0.6rem;
+    border-radius: 999px;
+    font-size: 0.875rem;
+    cursor: pointer;
+    transition: all 0.15s ease-in-out;
+    backdrop-filter: blur(2px);
+  }
+
+  .date-filter-btn:hover {
+    background: #fff;
+  }
+
+  .date-filter-btn--active {
+    background: #fff;
+    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.08);
+    color: #111827;
+  }
+
+  &__title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #1f2937;
+    margin: 0 0 0.5rem;
+    text-align: center;
+  }
+
+  &__subtitle {
+    color: #6b7280;
+    font-size: 1rem;
+    margin: 0;
+    text-align: center;
+  }
+
+  &__stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1rem;
+    padding: 1rem;
+  }
+
+  &__content {
+    display: grid;
+    /* Make both columns equal width */
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    height: auto;
+    padding: 0 1rem 1rem 1rem;
+  }
+
+  &__section {
+    background: #fff;
+    border-radius: 12px;
+    padding: 0.5rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  }
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.section-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #1f2937;
+  margin: 0;
+}
+
+.btn-link {
+  background: none;
+  border: none;
+  color: #6366f1;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 0.5rem;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.projects-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.project-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  transition: all 0.2s;
+
+  &:hover {
+    border-color: #6366f1;
+    box-shadow: 0 2px 8px rgba(99, 102, 241, 0.1);
+    cursor: pointer;
+  }
+
+  &__info {
+    flex: 1;
+  }
+
+  &__name {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #1f2937;
+    margin: 0 0 0.5rem;
+    /* Truncate long client names */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  &__deadline {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.85rem;
+    color: #6b7280;
+    margin: 0;
+    /* Prevent deadline overflowing */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+    svg {
+      font-size: 0.9rem;
+    }
+  }
+
+  &__services {
+    margin: 0 0 0.25rem;
+    font-size: 0.9rem;
+    color: #4b5563;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  &__status {
+    margin-left: 1rem;
+  }
+}
+
+.status-badge {
+  padding: 0.4rem 0.8rem;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.quick-actions {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+
+.action-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1.5rem 1rem;
+  background: #f9fafb;
+  border: 2px solid #e5e7eb;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #374151;
+
+  svg {
+    font-size: 1.8rem;
+    color: #6366f1;
+  }
+
+  &:hover {
+    background: #fff;
+    border-color: #6366f1;
+    // transform: translateY(-2px);
+    // box-shadow: 0 4px 12px rgba(99, 102, 241, 0.15);
+  }
+}
+
+@media (max-width: 1024px) {
+  .dashboard {
+    &__content {
+      grid-template-columns: 1fr;
+    }
+
+    &__stats {
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    }
+  }
+
+  .quick-actions {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .dashboard {
+    padding: 0;
+
+    &__header {
+      padding: 0.875rem;
+    }
+
+    &__title {
+      font-size: 1.35rem;
+    }
+
+    &__subtitle {
+      font-size: 0.875rem;
+    }
+
+    &__stats {
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 0.75rem;
+      padding: 0.875rem;
+    }
+
+    &__content {
+      padding: 0 0.875rem 0.875rem;
+      gap: 0.875rem;
+    }
+
+    &__section {
+      padding: 0.75rem;
+      border-radius: 10px;
+    }
+  }
+
+  .section-title {
+    font-size: 1.1rem;
+  }
+
+  .quick-actions {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+  }
+
+  .action-btn {
+    padding: 1rem 0.75rem;
+    font-size: 0.85rem;
+
+    svg {
+      font-size: 1.5rem;
+    }
+  }
+
+  .project-item {
+    padding: 0.875rem;
+    flex-wrap: wrap;
+
+    &__name {
+      font-size: 0.95rem;
+    }
+
+    &__status {
+      margin-left: 0;
+      margin-top: 0.5rem;
+      width: 100%;
+      text-align: right;
+    }
+  }
+}
+
+@media (max-width: 550px) {
+  .dashboard {
+    /* Center header contents for narrow screens (<= 550px) */
+    &__header {
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.75rem;
+    }
+
+    &__filter {
+      justify-content: center;
+      width: 100%;
+    }
+
+    &__title,
+    &__subtitle {
+      text-align: center;
+      width: 100%;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .dashboard {
+    &__header {
+      padding: 0.75rem;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    &__title {
+      font-size: 1.25rem;
+    }
+
+    &__stats {
+      grid-template-columns: 1fr 1fr;
+      gap: 0.5rem;
+      padding: 0.75rem;
+    }
+
+    &__content {
+      padding: 0 0.75rem 0.75rem;
+    }
+
+    &__section {
+      padding: 0.625rem;
+    }
+  }
+
+  .section-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .section-title {
+    font-size: 1rem;
+  }
+
+  .quick-actions {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.5rem;
+  }
+
+  .action-btn {
+    flex-direction: row;
+    padding: 0.875rem 1rem;
+
+    svg {
+      font-size: 1.25rem;
+    }
+  }
+
+  .project-item {
+    padding: 0.75rem;
+
+    &__name {
+      font-size: 0.9rem;
+    }
+
+    &__deadline {
+      font-size: 0.8rem;
+    }
+  }
+
+  .status-badge {
+    padding: 0.3rem 0.6rem;
+    font-size: 0.75rem;
+  }
+}
+
+/* Pricing plans added to the dashboard */
+.dashboard__plans {
+  display: flex;
+  gap: 2rem;
+  padding: 1rem;
+  align-items: stretch;
+  flex-wrap: wrap;
+  justify-content: center; /* center plan cards horizontally */
+}
+
+/* When using the same plan options container from the navbar, keep it centered and constrained */
+.dashboard__plans .plan-modal__options {
+  margin: 0;
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  width: 100%;
+  max-width: 920px; /* keeps cards grouped and centered on large screens */
+}
+
+.plan-card {
+  flex: 1 1 320px;
+  background: #fff;
+  border-radius: 12px;
+  padding: 1rem;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-width: 260px;
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  &__title {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #1f2937;
+  }
+
+  &__price {
+    text-align: right;
+  }
+
+  &__amount {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #111827;
+  }
+
+  &__period {
+    font-size: 0.85rem;
+    color: #6b7280;
+  }
+
+  &__list {
+    list-style: none;
+    padding: 0;
+    margin: 0.5rem 0 1rem 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+
+    li {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: #374151;
+      font-size: 0.95rem;
+    }
+
+    .plan-card__check {
+      color: #10b981;
+      font-size: 0.9rem;
+    }
+  }
+
+  &__actions {
+    display: flex;
+    gap: 0.75rem;
+    margin-top: 0.5rem;
+
+    button {
+      flex: 1;
+      padding: 0.65rem 0.75rem;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    .plan-card__contact {
+      text-align: end;
+      text-decoration: underline;
+      background: none;
+      border: none;
+      color: #313131;
+    }
+
+    .plan-card__activate {
+      background: #6366f1;
+      border: none;
+      color: #fff;
+      box-shadow: 0 4px 12px rgba(99, 102, 241, 0.15);
+    }
+  }
+
+  &--highlight {
+    border-color: #fde68a;
+    background: linear-gradient(180deg, #ffe88d, #fff);
+  }
+  /* Silver tier gradient */
+  &--silver {
+    border-color: #e6e7ea;
+  }
+}
+
+@media (max-width: 768px) {
+  .dashboard__plans {
+    flex-direction: column;
+    justify-content: center;
+    padding: 0.75rem;
+    gap: 1rem;
+  }
+
+  .dashboard__plans .plan-modal__options {
+    max-width: 100%;
+  }
+
+  .plan-card {
+    min-width: 100%;
+    padding: 0.875rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .dashboard__plans {
+    padding: 0.5rem;
+    gap: 0.75rem;
+  }
+
+  .plan-card {
+    padding: 0.75rem;
+
+    &__title {
+      font-size: 0.95rem;
+    }
+
+    &__amount {
+      font-size: 1.1rem;
+    }
+
+    &__list li {
+      font-size: 0.875rem;
+    }
+
+    &__actions {
+      flex-direction: column;
+      gap: 0.5rem;
+
+      button {
+        width: 100%;
+      }
+    }
+  }
+}

@@ -1,0 +1,279 @@
+.sidebar {
+  background: #1f2937;
+  height: calc(100vh - 50px);
+  position: sticky;
+  top: 60px;
+  transition: width 0.3s ease;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+
+  &--open {
+    width: 200px;
+  }
+
+  &--closed {
+    width: 80px;
+  }
+
+  &__nav {
+    padding: 0.5rem 0;
+    flex: 1 1 auto; /* allow nav to take available space */
+  }
+
+  &__footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 1.5rem;
+    color: #d1d5db;
+    text-decoration: none;
+    transition: all 0.2s;
+    position: relative;
+    white-space: nowrap;
+
+    &::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 4px;
+      background: #6366f1;
+      transform: scaleY(0);
+      transition: transform 0.2s;
+    }
+
+    &:hover {
+      background: rgba(99, 102, 241, 0.1);
+      color: #fff;
+    }
+
+    &--active {
+      background: rgba(99, 102, 241, 0.15);
+      color: #fff;
+
+      &::before {
+        transform: scaleY(1);
+      }
+
+      .sidebar__icon {
+        color: #6366f1;
+      }
+    }
+  }
+
+  &__icon {
+    font-size: 1.5rem;
+    min-width: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__label {
+    font-size: 0.95rem;
+    font-weight: 500;
+  }
+
+  /* Restricted items (Gold plan required) */
+  &__item--restricted {
+    opacity: 0.6;
+    cursor: pointer;
+    position: relative;
+
+    &::before {
+      background: #d4af37;
+    }
+
+    &:hover {
+      background: rgba(212, 175, 55, 0.1);
+      opacity: 0.85;
+    }
+
+    .sidebar__icon {
+      color: #9ca3af;
+    }
+  }
+
+  /* Gold badge for restricted items */
+  &__gold-badge {
+    color: #d4af37;
+    font-size: 0.75rem;
+    opacity: 0.9;
+    animation: shimmer 2s infinite;
+  }
+
+  @keyframes shimmer {
+    0%,
+    100% {
+      opacity: 0.7;
+    }
+    50% {
+      opacity: 1;
+    }
+  }
+
+  /* Chat unread badge */
+  &__chat-badge {
+    background: #ef4444;
+    color: #fff;
+    font-size: 0.7rem;
+    font-weight: 600;
+    padding: 0.15rem 0.4rem;
+    border-radius: 10px;
+    min-width: 18px;
+    text-align: center;
+    margin-left: auto;
+    animation: pulse 2s infinite;
+
+    &--collapsed {
+      position: absolute;
+      top: 6px;
+      right: 6px;
+      font-size: 0.6rem;
+      padding: 0.1rem 0.3rem;
+      min-width: 16px;
+    }
+  }
+
+  @keyframes pulse {
+    0%,
+    100% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.05);
+    }
+  }
+
+  /* Logout button specific tweaks */
+  &__logout {
+    width: calc(100% - 1rem);
+    margin: 2rem auto;
+    justify-content: flex-start;
+    gap: 0.75rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #d1d5db;
+    padding: 0.8rem 1rem;
+    border-radius: 6px;
+
+    &:hover {
+      background: rgba(99, 102, 241, 0.1);
+      color: #fff;
+    }
+    /* Rotate the logout icon so it doesn't resemble the login icon */
+    .sidebar__icon {
+      transform: rotate(180deg);
+      /* ensure smoothness if other transforms are added */
+      transition: transform 0.2s;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+    position: fixed;
+    left: 0;
+    top: 60px;
+    height: calc(100vh - 60px);
+    z-index: 99;
+    transform: translateX(-100%);
+    box-shadow: 4px 0 20px rgba(0, 0, 0, 0.15);
+
+    &--open {
+      transform: translateX(0);
+      width: 200px;
+    }
+
+    &--closed {
+      transform: translateX(-100%);
+    }
+
+    &__item {
+      padding: 0.875rem 1.25rem;
+    }
+
+    &__icon {
+      font-size: 1.35rem;
+    }
+
+    &__label {
+      font-size: 0.9rem;
+    }
+
+    &__logout {
+      margin: 1rem auto;
+      padding: 0.75rem 1rem;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .sidebar {
+    top: 56px;
+    height: calc(100vh - 56px);
+
+    &--open {
+      width: 50vw;
+      max-width: 260px;
+    }
+
+    &__item {
+      padding: 0.75rem 1rem;
+    }
+
+    &__icon {
+      font-size: 1.25rem;
+      min-width: 22px;
+    }
+
+    &__label {
+      font-size: 0.875rem;
+    }
+  }
+}
+
+/* Laptop screens: reduce width and spacing so sidebar feels slimmer on laptops */
+@media (min-width: 769px) and (max-width: 1440px) {
+  .sidebar {
+    &--open {
+      width: 140px; /* slightly narrower than desktop */
+    }
+
+    &--closed {
+      width: 64px; /* a bit narrower when collapsed */
+    }
+
+    &__item {
+      padding: 0.75rem 1rem;
+
+      &__icon,
+      .sidebar__icon {
+        font-size: 1.25rem;
+        min-width: 20px;
+      }
+
+      .sidebar__label {
+        font-size: 0.9rem;
+      }
+    }
+  }
+}
+
+/* Tablet portrait mode */
+@media (min-width: 481px) and (max-width: 768px) {
+  .sidebar {
+    &--open {
+      width: 220px;
+    }
+  }
+}

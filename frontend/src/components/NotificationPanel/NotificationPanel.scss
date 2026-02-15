@@ -1,0 +1,384 @@
+// Notification Panel Styles
+
+$primary: #6366f1;
+$primary-dark: #4f46e5;
+$success: #10b981;
+$warning: #f59e0b;
+$danger: #ef4444;
+$info: #3b82f6;
+$gray-100: #f3f4f6;
+$gray-200: #e5e7eb;
+$gray-300: #d1d5db;
+$gray-400: #9ca3af;
+$gray-500: #6b7280;
+$gray-600: #4b5563;
+$gray-700: #374151;
+$gray-800: #1f2937;
+
+// ============================================
+// Container
+// ============================================
+
+.notification-panel-container {
+  position: relative;
+}
+
+// ============================================
+// Bell Button
+// ============================================
+
+.notification-bell {
+  position: relative;
+  background: none;
+  border: none;
+  color: $gray-500;
+  font-size: 1.25rem;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 8px;
+  transition: all 150ms ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &:hover {
+    background: $gray-100;
+    color: $gray-700;
+  }
+
+  &.has-unread {
+    color: $primary;
+  }
+}
+
+.notification-badge {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  background: $danger;
+  color: #fff;
+  font-size: 0.7rem;
+  font-weight: 600;
+  border-radius: 9px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+
+// ============================================
+// Panel
+// ============================================
+
+.notification-panel {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  width: 380px;
+  max-height: 500px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+  border: 1px solid $gray-200;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+
+  @media (max-width: 480px) {
+    position: fixed;
+    top: auto;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    max-height: 70vh;
+    border-radius: 16px 16px 0 0;
+  }
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 1.25rem;
+    border-bottom: 1px solid $gray-200;
+
+    h3 {
+      margin: 0;
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: $gray-800;
+    }
+
+    .mark-all-read-btn {
+      display: flex;
+      align-items: center;
+      gap: 0.375rem;
+      background: none;
+      border: none;
+      color: $primary;
+      font-size: 0.8rem;
+      font-weight: 500;
+      cursor: pointer;
+      padding: 0.375rem 0.5rem;
+      border-radius: 6px;
+      transition: background 150ms ease;
+
+      &:hover {
+        background: rgba($primary, 0.1);
+      }
+    }
+  }
+
+  &__filters {
+    display: flex;
+    gap: 0.5rem;
+    padding: 0.75rem 1.25rem;
+    border-bottom: 1px solid $gray-200;
+    overflow-x: auto;
+
+    button {
+      padding: 0.5rem 0.75rem;
+      background: $gray-100;
+      border: none;
+      border-radius: 20px;
+      color: $gray-600;
+      font-size: 0.8rem;
+      font-weight: 500;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 150ms ease;
+
+      &:hover {
+        background: $gray-200;
+      }
+
+      &.active {
+        background: $primary;
+        color: #fff;
+      }
+    }
+  }
+
+  &__list {
+    flex: 1;
+    overflow-y: auto;
+    max-height: 350px;
+  }
+
+  &__footer {
+    padding: 0.75rem 1.25rem;
+    border-top: 1px solid $gray-200;
+    text-align: center;
+    display: flex;
+    gap: 0.5rem;
+    justify-content: space-between;
+    align-items: center;
+
+    button {
+      background: none;
+      border: none;
+      color: $gray-500;
+      font-size: 0.85rem;
+      cursor: pointer;
+      padding: 0.5rem 1rem;
+
+      &:hover {
+        color: $gray-700;
+      }
+    }
+
+    .clear-all-btn {
+      color: $danger;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+
+      &:hover {
+        background: rgba($danger, 0.05);
+        color: darken($danger, 5%);
+      }
+
+      &:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+      }
+    }
+  }
+}
+
+// ============================================
+// Loading & Empty States
+// ============================================
+
+.notification-loading,
+.notification-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  color: $gray-400;
+  text-align: center;
+
+  svg {
+    font-size: 2rem;
+    margin-bottom: 0.75rem;
+  }
+
+  p {
+    margin: 0;
+    color: $gray-500;
+  }
+}
+
+// ============================================
+// Notification Item
+// ============================================
+
+.notification-item {
+  display: flex;
+  gap: 0.75rem;
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid $gray-100;
+  transition: background 150ms ease;
+  cursor: default;
+
+  &.clickable {
+    cursor: pointer;
+  }
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  &:hover {
+    background: $gray-100;
+  }
+
+  &.unread {
+    background: rgba($primary, 0.03);
+
+    &::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 3px;
+      background: $primary;
+    }
+  }
+
+  position: relative;
+
+  &__icon {
+    flex-shrink: 0;
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba($primary, 0.1);
+    color: $primary;
+
+    &.type-announcement {
+      background: rgba($primary, 0.1);
+      color: $primary;
+    }
+
+    &.type-payment {
+      background: rgba($success, 0.1);
+      color: $success;
+    }
+
+    &.type-team {
+      background: rgba($info, 0.1);
+      color: $info;
+    }
+
+    &.type-event {
+      background: rgba($warning, 0.1);
+      color: $warning;
+    }
+
+    &.type-system,
+    &.type-security {
+      background: rgba($danger, 0.1);
+      color: $danger;
+    }
+  }
+
+  &__content {
+    flex: 1;
+    min-width: 0;
+
+    h4 {
+      margin: 0 0 0.25rem;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: $gray-800;
+      line-height: 1.3;
+    }
+
+    p {
+      margin: 0;
+      font-size: 0.85rem;
+      color: $gray-500;
+      line-height: 1.4;
+      display: -webkit-box;
+      line-clamp: 2;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+  }
+
+  &__time {
+    font-size: 0.75rem;
+    color: $gray-400;
+    margin-top: 0.375rem;
+    display: block;
+  }
+
+  &__actions {
+    display: flex;
+    flex-direction: column;
+    gap: 0.375rem;
+    opacity: 0;
+    transition: opacity 150ms ease;
+
+    button {
+      width: 28px;
+      height: 28px;
+      background: $gray-100;
+      border: none;
+      border-radius: 6px;
+      color: $gray-500;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      transition: all 150ms ease;
+
+      &:hover {
+        background: $gray-200;
+        color: $gray-700;
+      }
+
+      &.dismiss-btn:hover {
+        background: rgba($danger, 0.1);
+        color: $danger;
+      }
+    }
+  }
+
+  &:hover &__actions {
+    opacity: 1;
+  }
+}

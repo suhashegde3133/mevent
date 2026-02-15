@@ -1,0 +1,1166 @@
+// Notes Page Styles - Google Keep inspired design
+// Modern, clean UI matching the platform theme
+
+// Variables
+$primary: #6366f1;
+$primary-dark: #4f46e5;
+$primary-light: rgba(99, 102, 241, 0.1);
+$success: #10b981;
+$warning: #f59e0b;
+$danger: #ef4444;
+$gray-50: #f9fafb;
+$gray-100: #f3f4f6;
+$gray-200: #e5e7eb;
+$gray-300: #d1d5db;
+$gray-400: #9ca3af;
+$gray-500: #6b7280;
+$gray-600: #4b5563;
+$gray-700: #374151;
+$gray-800: #1f2937;
+$gray-900: #111827;
+$border-radius: 12px;
+$transition: all 0.2s ease;
+
+.notes-page {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background: $gray-50;
+  padding: 1.5rem;
+  overflow-y: auto;
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  &__header-left {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  &__header-right {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  &__title {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: $gray-800;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+
+    svg {
+      color: $primary;
+      font-size: 1.5rem;
+    }
+  }
+
+  &__subtitle {
+    color: $gray-500;
+    font-size: 0.95rem;
+    margin: 0;
+  }
+
+  &__tabs {
+    display: flex;
+    background: #fff;
+    border-radius: 8px;
+    padding: 4px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  }
+
+  &__tab {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    border: none;
+    background: transparent;
+    color: $gray-500;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    border-radius: 6px;
+    transition: $transition;
+
+    &:hover {
+      color: $gray-700;
+    }
+
+    &.active {
+      background: $primary;
+      color: #fff;
+    }
+  }
+
+  &__search {
+    position: relative;
+    max-width: 500px;
+    margin-bottom: 1.5rem;
+  }
+
+  &__search-icon {
+    position: absolute;
+    left: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: $gray-400;
+  }
+
+  &__search-input {
+    width: 100%;
+    padding: 0.75rem 1rem 0.75rem 2.75rem;
+    border: 1px solid $gray-200;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    background: #fff;
+    transition: $transition;
+
+    &:focus {
+      outline: none;
+      border-color: $primary;
+      box-shadow: 0 0 0 3px $primary-light;
+    }
+
+    &::placeholder {
+      color: $gray-400;
+    }
+  }
+
+  &__search-clear {
+    position: absolute;
+    right: 0.75rem;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: $gray-400;
+    cursor: pointer;
+    padding: 0.25rem;
+
+    &:hover {
+      color: $gray-600;
+    }
+  }
+
+  &__content {
+    flex: 1;
+    overflow-y: auto;
+    min-height: 0;
+  }
+
+  &__loading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 4rem;
+    color: $gray-500;
+  }
+
+  &__spinner {
+    width: 48px;
+    height: 48px;
+    border: 4px solid $gray-200;
+    border-top-color: $primary;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-bottom: 1rem;
+  }
+
+  &__empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 4rem;
+    text-align: center;
+  }
+
+  &__empty-icon {
+    width: 80px;
+    height: 80px;
+    background: $gray-100;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+
+    svg {
+      font-size: 2rem;
+      color: $gray-400;
+    }
+  }
+
+  &__empty h3 {
+    font-size: 1.25rem;
+    color: $gray-700;
+    margin-bottom: 0.5rem;
+  }
+
+  &__empty p {
+    color: $gray-500;
+    font-size: 0.95rem;
+  }
+
+  &__overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 50;
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+// New Note Component
+.new-note {
+  max-width: 600px;
+  margin: 0 auto 2rem;
+  background: #fff;
+  border-radius: $border-radius;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: $transition;
+
+  &--expanded {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  }
+
+  &__placeholder {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1rem 1.25rem;
+    color: $gray-500;
+    font-size: 0.95rem;
+    cursor: text;
+
+    &:hover {
+      color: $gray-700;
+    }
+  }
+
+  &__form {
+    padding: 1rem 1.25rem;
+  }
+
+  &__title-input {
+    width: 100%;
+    border: none;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: $gray-800;
+    padding: 0.5rem 0;
+    margin-bottom: 0.5rem;
+    background: transparent;
+
+    &:focus {
+      outline: none;
+    }
+
+    &::placeholder {
+      color: $gray-400;
+    }
+  }
+
+  &__type-tabs {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid $gray-100;
+  }
+
+  &__type-tab {
+    display: flex;
+    align-items: center;
+    gap: 0.375rem;
+    padding: 0.375rem 0.75rem;
+    border: 1px solid $gray-200;
+    background: #fff;
+    color: $gray-500;
+    font-size: 0.85rem;
+    font-weight: 500;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: $transition;
+
+    &:hover {
+      border-color: $primary;
+      color: $primary;
+    }
+
+    &.active {
+      background: $primary-light;
+      border-color: $primary;
+      color: $primary;
+    }
+  }
+
+  &__content-input {
+    width: 100%;
+    border: none;
+    font-size: 0.95rem;
+    color: $gray-700;
+    resize: none;
+    min-height: 80px;
+    background: transparent;
+
+    &:focus {
+      outline: none;
+    }
+
+    &::placeholder {
+      color: $gray-400;
+    }
+  }
+
+  &__checklist {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+  }
+
+  &__checklist-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.375rem 0;
+  }
+
+  &__checkbox {
+    width: 18px;
+    height: 18px;
+    border: 2px solid $gray-300;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  &__checklist-text {
+    flex: 1;
+    font-size: 0.95rem;
+    color: $gray-700;
+  }
+
+  &__checklist-remove {
+    background: none;
+    border: none;
+    color: $gray-400;
+    cursor: pointer;
+    padding: 0.25rem;
+    opacity: 0;
+    transition: $transition;
+
+    &:hover {
+      color: $danger;
+    }
+  }
+
+  &__checklist-item:hover &__checklist-remove {
+    opacity: 1;
+  }
+
+  &__checklist-input {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.375rem 0;
+
+    input {
+      flex: 1;
+      border: none;
+      font-size: 0.95rem;
+      color: $gray-700;
+      background: transparent;
+
+      &:focus {
+        outline: none;
+      }
+
+      &::placeholder {
+        color: $gray-400;
+      }
+    }
+  }
+
+  &__checklist-add {
+    background: $primary-light;
+    border: none;
+    color: $primary;
+    width: 24px;
+    height: 24px;
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: $transition;
+
+    &:hover {
+      background: $primary;
+      color: #fff;
+    }
+  }
+
+  &__colors {
+    display: flex;
+    gap: 0.5rem;
+    margin: 1rem 0;
+    padding-top: 0.75rem;
+    border-top: 1px solid $gray-100;
+  }
+
+  &__color-btn {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: 2px solid transparent;
+    cursor: pointer;
+    transition: $transition;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+
+    &:hover {
+      transform: scale(1.1);
+    }
+
+    &.active {
+      border-color: $primary;
+    }
+  }
+
+  &__actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.75rem;
+    margin-top: 1rem;
+  }
+
+  &__cancel {
+    padding: 0.5rem 1rem;
+    border: none;
+    background: $gray-100;
+    color: $gray-600;
+    font-size: 0.9rem;
+    font-weight: 500;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: $transition;
+
+    &:hover {
+      background: $gray-200;
+    }
+  }
+
+  &__save {
+    padding: 0.5rem 1rem;
+    border: none;
+    background: $primary;
+    color: #fff;
+    font-size: 0.9rem;
+    font-weight: 500;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: $transition;
+
+    &:hover {
+      background: $primary-dark;
+    }
+  }
+}
+
+// Notes Section
+.notes-section {
+  margin-bottom: 2rem;
+
+  &__title {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: $gray-500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+
+    svg {
+      font-size: 0.75rem;
+    }
+  }
+}
+
+// Notes Grid
+.notes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 1rem;
+}
+
+// Note Card
+.note-card {
+  background: #fff;
+  border-radius: $border-radius;
+  padding: 1rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: $transition;
+  position: relative;
+  border: 1px solid transparent;
+
+  &:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+
+  &--pinned {
+    border-color: $warning;
+  }
+
+  &__pin-indicator {
+    position: absolute;
+    top: -8px;
+    right: 12px;
+    color: $warning;
+    transform: rotate(45deg);
+    font-size: 0.9rem;
+  }
+
+  &__title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: $gray-800;
+    margin: 0 0 0.5rem;
+    line-height: 1.4;
+  }
+
+  &__content {
+    font-size: 0.9rem;
+    color: $gray-600;
+    margin: 0;
+    line-height: 1.5;
+    display: -webkit-box;
+    -webkit-line-clamp: 6;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    white-space: pre-wrap;
+  }
+
+  &__checklist {
+    display: flex;
+    flex-direction: column;
+    gap: 0.375rem;
+  }
+
+  &__checklist-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.85rem;
+    color: $gray-700;
+    padding: 0.125rem 0;
+    cursor: pointer;
+
+    &--completed {
+      .note-card__checkbox {
+        background: $success;
+        border-color: $success;
+        color: #fff;
+      }
+
+      .note-card__checklist-text {
+        text-decoration: line-through;
+        color: $gray-400;
+      }
+    }
+  }
+
+  &__checkbox {
+    width: 16px;
+    height: 16px;
+    border: 2px solid $gray-300;
+    border-radius: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-size: 0.6rem;
+    transition: $transition;
+  }
+
+  &__checklist-text {
+    flex: 1;
+    line-height: 1.3;
+  }
+
+  &__more {
+    font-size: 0.8rem;
+    color: $gray-400;
+    margin-top: 0.25rem;
+  }
+
+  &__progress {
+    font-size: 0.75rem;
+    color: $gray-400;
+    margin-top: 0.5rem;
+    padding-top: 0.5rem;
+    border-top: 1px solid $gray-100;
+  }
+
+  &__footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 0.75rem;
+    padding-top: 0.75rem;
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
+  }
+
+  &__date {
+    font-size: 0.75rem;
+    color: $gray-400;
+  }
+
+  &__actions {
+    display: flex;
+    gap: 0.25rem;
+    position: relative;
+    opacity: 0;
+    transition: $transition;
+    /* Prevent clicks when actions are hidden */
+    pointer-events: none;
+  }
+
+  /* Show actions when the card is hovered or any child control is focused (keyboard accessibility) */
+  &:hover &__actions,
+  &:focus-within &__actions {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  &__action-btn {
+    width: 28px;
+    height: 28px;
+    border: none;
+    background: transparent;
+    color: $gray-400;
+    cursor: pointer;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: $transition;
+
+    &:hover {
+      background: rgba(0, 0, 0, 0.08);
+      color: $gray-600;
+    }
+
+    .pinned {
+      color: $warning;
+    }
+  }
+
+  &__color-picker {
+    position: absolute;
+    bottom: 100%;
+    right: 0;
+    background: #fff;
+    border-radius: 8px;
+    padding: 0.5rem;
+    display: flex;
+    gap: 0.375rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    z-index: 100;
+    margin-bottom: 0.5rem;
+  }
+
+  &__color-option {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: 2px solid transparent;
+    cursor: pointer;
+    transition: $transition;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+
+    &:hover {
+      transform: scale(1.1);
+    }
+
+    &.active {
+      border-color: $primary;
+    }
+  }
+
+  &__menu {
+    position: absolute;
+    bottom: 100%;
+    right: 0;
+    background: #fff;
+    border-radius: 8px;
+    padding: 0.5rem;
+    min-width: 140px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    z-index: 100;
+    margin-bottom: 0.5rem;
+
+    button {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      width: 100%;
+      padding: 0.5rem 0.75rem;
+      border: none;
+      background: none;
+      color: $gray-700;
+      font-size: 0.85rem;
+      cursor: pointer;
+      border-radius: 4px;
+      transition: $transition;
+
+      &:hover {
+        background: $gray-100;
+      }
+
+      &.danger {
+        color: $danger;
+
+        &:hover {
+          background: rgba($danger, 0.1);
+        }
+      }
+    }
+  }
+}
+
+// Note Modal
+.note-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 200;
+  padding: 2rem;
+}
+
+.note-modal {
+  background: #fff;
+  border-radius: $border-radius;
+  width: 100%;
+  max-width: 600px;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
+  overflow: hidden;
+
+  &__header {
+    display: flex;
+    align-items: center;
+    padding: 1rem 1.25rem;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  }
+
+  &__title-input {
+    flex: 1;
+    border: none;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: $gray-800;
+    background: transparent;
+
+    &:focus {
+      outline: none;
+    }
+
+    &::placeholder {
+      color: $gray-400;
+    }
+  }
+
+  &__close {
+    width: 32px;
+    height: 32px;
+    border: none;
+    background: rgba(0, 0, 0, 0.05);
+    color: $gray-500;
+    cursor: pointer;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: $transition;
+
+    &:hover {
+      background: rgba(0, 0, 0, 0.1);
+      color: $gray-700;
+    }
+  }
+
+  &__body {
+    flex: 1;
+    padding: 1rem 1.25rem;
+    overflow-y: auto;
+  }
+
+  &__content-input {
+    width: 100%;
+    border: none;
+    font-size: 0.95rem;
+    color: $gray-700;
+    resize: none;
+    min-height: 150px;
+    background: transparent;
+    line-height: 1.6;
+
+    &:focus {
+      outline: none;
+    }
+
+    &::placeholder {
+      color: $gray-400;
+    }
+  }
+
+  &__checklist {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  &__checklist-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.375rem 0;
+
+    &.completed {
+      .note-modal__checklist-text {
+        text-decoration: line-through;
+        color: $gray-400;
+      }
+    }
+  }
+
+  &__checkbox {
+    width: 20px;
+    height: 20px;
+    border: 2px solid $gray-300;
+    border-radius: 4px;
+    background: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: $transition;
+    color: #fff;
+
+    &:hover {
+      border-color: $primary;
+    }
+  }
+
+  &__checklist-item.completed &__checkbox {
+    background: $success;
+    border-color: $success;
+  }
+
+  &__checkbox-placeholder {
+    width: 20px;
+    height: 20px;
+    border: 2px solid $gray-200;
+    border-radius: 4px;
+    flex-shrink: 0;
+  }
+
+  &__checklist-text {
+    flex: 1;
+    font-size: 0.95rem;
+    color: $gray-700;
+  }
+
+  &__checklist-remove {
+    background: none;
+    border: none;
+    color: $gray-400;
+    cursor: pointer;
+    padding: 0.25rem;
+    opacity: 0;
+    transition: $transition;
+
+    &:hover {
+      color: $danger;
+    }
+  }
+
+  &__checklist-item:hover &__checklist-remove {
+    opacity: 1;
+  }
+
+  &__checklist-input {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.375rem 0;
+    margin-top: 0.5rem;
+
+    input {
+      flex: 1;
+      border: none;
+      font-size: 0.95rem;
+      color: $gray-700;
+      background: transparent;
+
+      &:focus {
+        outline: none;
+      }
+
+      &::placeholder {
+        color: $gray-400;
+      }
+    }
+  }
+
+  &__checklist-add {
+    background: $primary-light;
+    border: none;
+    color: $primary;
+    width: 24px;
+    height: 24px;
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: $transition;
+
+    &:hover {
+      background: $primary;
+      color: #fff;
+    }
+  }
+
+  &__colors {
+    display: flex;
+    gap: 0.5rem;
+    padding: 0.75rem 1.25rem;
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
+  }
+
+  &__color-btn {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: 2px solid transparent;
+    cursor: pointer;
+    transition: $transition;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+
+    &:hover {
+      transform: scale(1.1);
+    }
+
+    &.active {
+      border-color: $primary;
+    }
+  }
+
+  &__footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.75rem 1.25rem;
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
+  }
+
+  &__date {
+    font-size: 0.8rem;
+    color: $gray-400;
+  }
+
+  &__actions {
+    display: flex;
+    gap: 0.75rem;
+  }
+
+  &__cancel {
+    padding: 0.5rem 1rem;
+    border: none;
+    background: $gray-100;
+    color: $gray-600;
+    font-size: 0.9rem;
+    font-weight: 500;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: $transition;
+
+    &:hover {
+      background: $gray-200;
+    }
+  }
+
+  &__save {
+    padding: 0.5rem 1rem;
+    border: none;
+    background: $primary;
+    color: #fff;
+    font-size: 0.9rem;
+    font-weight: 500;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: $transition;
+
+    &:hover {
+      background: $primary-dark;
+    }
+  }
+}
+
+// Responsive Design
+@media (max-width: 1024px) {
+  .notes-grid {
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .notes-page {
+    padding: 1rem;
+
+    &__header {
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    &__tabs {
+      width: 100%;
+      justify-content: center;
+    }
+
+    &__search {
+      max-width: 100%;
+    }
+  }
+
+  .new-note {
+    margin: 0 0 1.5rem;
+  }
+
+  .notes-grid {
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 0.75rem;
+  }
+
+  .note-card {
+    padding: 0.75rem;
+
+    &__title {
+      font-size: 0.95rem;
+    }
+
+    &__content {
+      font-size: 0.85rem;
+      -webkit-line-clamp: 4;
+    }
+
+    &__actions {
+      opacity: 1;
+      /* Ensure actions are interactive on small screens */
+      pointer-events: auto;
+    }
+  }
+
+  .note-modal-overlay {
+    padding: 1rem;
+  }
+
+  .note-modal {
+    max-height: 85vh;
+  }
+}
+
+@media (max-width: 480px) {
+  .notes-page {
+    padding: 0.75rem;
+
+    &__title {
+      font-size: 1.5rem;
+
+      svg {
+        font-size: 1.25rem;
+      }
+    }
+  }
+
+  .notes-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .new-note {
+    &__type-tabs {
+      justify-content: center;
+    }
+
+    &__colors {
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    &__actions {
+      flex-direction: column;
+
+      button {
+        width: 100%;
+      }
+    }
+  }
+
+  .note-card {
+    &__footer {
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    &__actions {
+      width: 100%;
+      justify-content: flex-end;
+    }
+  }
+
+  .note-modal {
+    &__footer {
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    &__actions {
+      width: 100%;
+      flex-direction: column;
+
+      button {
+        width: 100%;
+      }
+    }
+  }
+}

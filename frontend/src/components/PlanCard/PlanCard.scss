@@ -1,0 +1,264 @@
+.plan-card {
+  flex: 1 1 320px;
+  min-width: 260px;
+  border-radius: 12px;
+  padding: 1rem;
+  background: linear-gradient(180deg, #ffffff, #fbfbfd);
+  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.06);
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  overflow: visible;
+}
+
+// Discount Badge
+.plan-card__discount-badge {
+  position: absolute;
+  top: -12px;
+  right: 0;
+  background: linear-gradient(135deg, #e23b09, #9b5353);
+  color: white;
+  padding: 0.35rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  box-shadow: 0 4px 12px rgba(226, 59, 9, 0.35);
+  z-index: 10;
+  animation: pulse-badge 2s ease-in-out infinite;
+}
+
+@keyframes pulse-badge {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+.plan-card--gold .plan-card__discount-badge {
+  background: linear-gradient(135deg, #e23b09, #9b5353);
+  box-shadow: 0 4px 12px rgba(226, 59, 9, 0.35);
+}
+
+// Original Price (struck through)
+.plan-card__original-price {
+  font-size: 0.8rem;
+  color: #9ca3af;
+  text-decoration: line-through;
+  margin-bottom: 2px;
+}
+
+// Discounted price styling
+.plan-card__price-amount--discounted {
+  color: #10b981;
+  font-size: 1.1rem;
+}
+
+.plan-card__header {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.plan-card__meta {
+  display: flex;
+  flex-direction: column;
+}
+
+.plan {
+  text-align: center;
+}
+
+.plan-card__badge {
+  width: 48px;
+  height: 48px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f3f4f6;
+  font-size: 1.1rem;
+}
+
+.plan-card--gold .plan-card__badge {
+  background: linear-gradient(
+    135deg,
+    rgba(212, 175, 55, 0.12),
+    rgba(245, 224, 117, 0.06)
+  );
+  color: #d4af37;
+}
+
+.plan-card--silver .plan-card__badge {
+  background: linear-gradient(
+    135deg,
+    rgba(192, 192, 192, 0.08),
+    rgba(229, 231, 235, 0.03)
+  );
+  color: #6b7280;
+}
+
+.plan-card__price-block {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: center;
+  min-width: 84px;
+}
+
+.plan-card__price-amount {
+  font-weight: 700;
+  font-size: 1rem;
+  color: #111827;
+}
+
+.plan-card__price-period {
+  font-size: 0.9rem;
+  color: #292f38;
+}
+
+.plan-card__list {
+  list-style: none;
+  padding: 0;
+  margin: 0.75rem 0 0;
+}
+
+.plan-card__list li {
+  display: flex;
+  justify-content: center;
+  gap: 0.6rem;
+  align-items: center;
+  padding: 0.38rem 0;
+  color: #374151;
+}
+
+.plan-modal__benefit-icon {
+  color: #10b981;
+}
+
+.payment-security-note {
+  text-align: center;
+}
+
+.plan-card__actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.6rem;
+  margin-top: 1rem;
+}
+
+.btn {
+  padding: 0.6rem 0.9rem;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.btn--primary {
+  background: #6366f1;
+  color: white;
+}
+
+.btn--outline {
+  background: white;
+  color: #374151;
+  border: 1px solid #848d9a !important;
+}
+
+.btn--light {
+  border: 1px solid #848d9a !important;
+}
+
+/* Responsive styles for PlanCard */
+@media (max-width: 768px) {
+  .plan-card {
+    min-width: 100%;
+    padding: 0.875rem;
+  }
+
+  .plan-card__badge {
+    width: 42px;
+    height: 42px;
+    font-size: 1rem;
+  }
+
+  .plan-card__price-amount {
+    font-size: 0.95rem;
+  }
+
+  .plan-card__price-period {
+    font-size: 0.85rem;
+  }
+
+  .plan-card__list li {
+    font-size: 0.9rem;
+    padding: 0.3rem 0;
+  }
+
+  .plan-card__actions {
+    gap: 0.5rem;
+    margin-top: 0.75rem;
+  }
+
+  .btn {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.875rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .plan-card {
+    padding: 0.75rem;
+    border-radius: 10px;
+  }
+
+  .plan-card__header {
+    gap: 0.5rem;
+  }
+
+  .plan-card__badge {
+    width: 38px;
+    height: 38px;
+    font-size: 0.9rem;
+    border-radius: 8px;
+  }
+
+  .plan-card__price-block {
+    min-width: 72px;
+  }
+
+  .plan-card__price-amount {
+    font-size: 0.9rem;
+  }
+
+  .plan-card__price-period {
+    font-size: 0.8rem;
+  }
+
+  .plan-card__list {
+    margin-top: 0.5rem;
+  }
+
+  .plan-card__list li {
+    font-size: 0.85rem;
+    gap: 0.5rem;
+  }
+
+  .plan-card__actions {
+    flex-direction: column;
+    gap: 0.5rem;
+
+    .btn {
+      width: 100%;
+      text-align: center;
+    }
+  }
+}

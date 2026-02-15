@@ -1,0 +1,268 @@
+.plan-upgrade-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(15, 23, 42, 0.6);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 1rem;
+  animation: fadeIn 0.2s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.plan-upgrade-modal {
+  background: #ffffff;
+  border-radius: 16px;
+  max-width: 480px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  position: relative;
+  animation: slideUp 0.3s ease-out;
+
+  &__close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    width: 36px;
+    height: 36px;
+    border: none;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    transition: all 0.2s ease;
+    z-index: 10;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.3);
+    }
+  }
+
+  // Header Section
+  &__header {
+    background: linear-gradient(135deg, #d4af37 0%, #b8860b 100%);
+    padding: 2rem;
+    text-align: center;
+    color: white;
+    border-radius: 16px 16px 0 0;
+  }
+
+  &__icon-wrapper {
+    width: 64px;
+    height: 64px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1rem;
+  }
+
+  &__icon {
+    font-size: 1.75rem;
+    color: white;
+  }
+
+  &__title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin: 0 0 0.75rem 0;
+  }
+
+  &__subtitle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    font-size: 0.9375rem;
+    margin: 0;
+    opacity: 0.95;
+  }
+
+  &__lock {
+    font-size: 0.875rem;
+  }
+
+  // Body Section
+  &__body {
+    padding: 1.5rem;
+  }
+
+  &__current {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1rem;
+    background: #f8fafc;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    font-size: 0.9375rem;
+  }
+
+  &__current-label {
+    color: #64748b;
+  }
+
+  &__current-plan {
+    font-weight: 600;
+    color: #1e293b;
+    background: #e2e8f0;
+    padding: 0.25rem 0.75rem;
+    border-radius: 4px;
+  }
+
+  &__description {
+    text-align: center;
+    color: #475569;
+    margin: 0 0 1.5rem 0;
+    font-size: 0.9375rem;
+    line-height: 1.5;
+  }
+
+  &__card {
+    margin-bottom: 1.5rem;
+
+    .plan-card {
+      max-width: 100%;
+    }
+  }
+
+  &__benefits {
+    background: linear-gradient(
+      135deg,
+      rgba(212, 175, 55, 0.08),
+      rgba(184, 134, 11, 0.04)
+    );
+    border: 1px solid rgba(212, 175, 55, 0.2);
+    border-radius: 12px;
+    padding: 1rem;
+
+    h4 {
+      margin: 0 0 0.75rem 0;
+      font-size: 0.9375rem;
+      color: #92400e;
+      text-align: center;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    li {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-size: 0.875rem;
+      color: #78350f;
+
+      svg {
+        width: 20px;
+        height: 20px;
+        flex-shrink: 0;
+      }
+    }
+  }
+
+  // Footer Section
+  &__footer {
+    padding: 1rem 1.5rem 1.5rem;
+    display: flex;
+    justify-content: center;
+    border-top: 1px solid #e2e8f0;
+  }
+
+  &__cancel {
+    padding: 0.75rem 2rem;
+    background: transparent;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    color: #64748b;
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    &:hover {
+      background: #f1f5f9;
+      border-color: #94a3b8;
+      color: #475569;
+    }
+  }
+}
+
+// Responsive Styles
+@media (max-width: 480px) {
+  .plan-upgrade-modal {
+    &__header {
+      padding: 1.5rem;
+    }
+
+    &__icon-wrapper {
+      width: 56px;
+      height: 56px;
+    }
+
+    &__icon {
+      font-size: 1.5rem;
+    }
+
+    &__title {
+      font-size: 1.25rem;
+    }
+
+    &__subtitle {
+      font-size: 0.875rem;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+
+    &__body {
+      padding: 1rem;
+    }
+
+    &__benefits {
+      li {
+        font-size: 0.8125rem;
+      }
+    }
+
+    &__footer {
+      padding: 1rem;
+    }
+  }
+}
