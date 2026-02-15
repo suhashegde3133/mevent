@@ -1,0 +1,105 @@
+/* CSS Reset and Global Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  /* Prevent text size adjustment on orientation change */
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  /* Prevent vertical and horizontal scrolling across the app */
+  overflow-x: hidden;
+  font-family:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu",
+    "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: #1f2937;
+  background: #f3f4f6;
+  /* Improve touch scrolling on mobile */
+  -webkit-overflow-scrolling: touch;
+  /* Prevent pull-to-refresh on mobile */
+  overscroll-behavior-y: contain;
+}
+
+/* Universal 80% scaling for entire application */
+/* #root {
+  transform: translateX(-50%) scale(0.8);
+  transform-origin: top center;
+  transition: transform 0.3s ease-in-out;
+  width: 125%; 
+  height: 125%;
+  margin: 0 auto;
+  position: relative;
+  left: 50%;
+} */
+
+code {
+  font-family:
+    source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
+
+/* Remove default button styles */
+button {
+  font-family: inherit;
+  /* Prevent text selection on buttons */
+  -webkit-user-select: none;
+  user-select: none;
+  /* Improve touch response on mobile */
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Remove default input styles */
+input,
+textarea,
+select {
+  font-family: inherit;
+  /* Prevent zoom on input focus on iOS */
+  font-size: 16px;
+}
+
+/* Link styles */
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* Image styles */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Search highlight */
+.search-highlight {
+  background: #fff59d; /* soft yellow */
+  padding: 0 2px;
+  border-radius: 2px;
+}
