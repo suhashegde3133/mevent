@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat Debug Console</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        h1 {
+            color: #333;
+            border-bottom: 2px solid #4CAF50;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #555;
+            margin-top: 20px;
+        }
+        .test-section {
+            background: #f9f9f9;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+        .command {
+            background: #263238;
+            color: #aed581;
+            padding: 10px;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+            margin: 10px 0;
+        }
+        .step {
+            background: #e3f2fd;
+            padding: 10px;
+            margin: 10px 0;
+            border-left: 4px solid #2196F3;
+        }
+        .warning {
+            background: #fff3e0;
+            padding: 10px;
+            margin: 10px 0;
+            border-left: 4px solid #ff9800;
+        }
+        .success {
+            background: #e8f5e9;
+            padding: 10px;
+            margin: 10px 0;
+            border-left: 4px solid #4caf50;
+        }
+        .error {
+            background: #ffebee;
+            padding: 10px;
+            margin: 10px 0;
+            border-left: 4px solid #f44336;
+        }
+        button {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 5px;
+        }
+        button:hover {
+            background: #45a049;
+        }
+        .log-output {
+            background: #263238;
+            color: #fff;
+            padding: 15px;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            max-height: 400px;
+            overflow-y: auto;
+            margin: 10px 0;
+        }
+        .status {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 3px;
+            font-weight: bold;
+            margin: 5px;
+        }
+        .status-pass { background: #4caf50; color: white; }
+        .status-fail { background: #f44336; color: white; }
+        .status-pending { background: #ff9800; color: white; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔧 MIVENT Chat Debug Console</h1>
+        <p>Use this tool to diagnose and fix chat message delivery issues.</p>
+    </div>
+
+    <div class="container">
+        <h2>📋 Quick Diagnostic</h2>
+        <div class="test-section">
+            <button onclick="runDiagnostics()">Run Full Diagnostics</button>
+            <button onclick="clearChatData()">Clear All Chat Data</button>
+            <button onclick="testConversationQuery()">Test Conversation Query</button>
+        </div>
+        <div id="diagnosticResults" class="log-output" style="display:none;"></div>
+    </div>
+
+    <div class="container">
+        <h2>🔍 Step-by-Step Test</h2>
+        
+        <div class="step">
+            <strong>Step 1: Verify User Authentication</strong>
+            <p>Check if current user is properly authenticated and has an email.</p>
+            <button onclick="checkAuth()">Check Authentication</button>
+            <div id="authResult"></div>
+        </div>
+
+        <div class="step">
+            <strong>Step 2: Check Team Members</strong>
+            <p>Verify team members are loaded with valid email addresses.</p>
+            <button onclick="checkTeamMembers()">Check Team Members</button>
+            <div id="teamResult"></div>
+        </div>
+
+        <div class="step">
+            <strong>Step 3: Check Conversations</strong>
+            <p>List all conversations and their participants.</p>
+            <button onclick="checkConversations()">Check Conversations</button>
+            <div id="convoResult"></div>
+        </div>
+
+        <div class="step">
+            <strong>Step 4: Check Messages</strong>
+            <p>List messages for the active conversation.</p>
+            <button onclick="checkMessages()">Check Messages</button>
+            <div id="messageResult"></div>
+        </div>
+    </div>
+
+    <div class="container">
+        <h2>🎯 Test Scenarios</h2>
+        
+        <div class="warning">
+            <strong>⚠️ Before Testing:</strong> Make sure you have at least two users with team members added to each other.
+        </div>
+
+        <div class="test-section">
+            <h3>Scenario 1: Create New Conversation</h3>
+            <p>User Email to Chat With:</p>
+            <input type="email" id="targetEmail" placeholder="user@example.com" style="padding: 8px; width: 300px; margin: 5px;">
+            <br>
+            <button onclick="createTestConversation()">Create Test Conversation</button>
+            <div id="createResult"></div>
+        </div>
+
+        <div class="test-section">
+            <h3>Scenario 2: Send Test Message</h3>
+            <p>Message Content:</p>
+            <input type="text" id="testMessage" placeholder="Hello, this is a test message" style="padding: 8px; width: 300px; margin: 5px;">
+            <br>
+            <button onclick="sendTestMessage()">Send Test Message</button>
+            <div id="sendResult"></div>
+        </div>
+    </div>
+
+    <div class="container">
+        <h2>📊 Real-Time Monitor</h2>
+        <button onclick="startMonitoring()">Start Monitoring</button>
+        <button onclick="stopMonitoring()">Stop Monitoring</button>
+        <div id="monitorOutput" class="log-output" style="display:none;"></div>
+    </div>
+
+    <script>
+        let monitoringInterval = null;
+
+        function log(message, type = 'info') {
+            const timestamp = new Date().toLocaleTimeString();
+            const colors = {
+                info: '#aed581',
+                success: '#81c784',
+                error: '#ef5350',
+                warning: '#ffb74d'
+            };
+            return `<div style="color: ${colors[type]};">[${timestamp}] ${message}</div>`;
+        }
+
+        function showResult(elementId, content) {
+            const el = document.getElementById(elementId);
+            el.innerHTML = content;
+            el.style.display = 'block';
+        }
+
+        function checkAuth() {
+            const result = document.getElementById('authResult');
+            try {
+                const authUser = JSON.parse(localStorage.getItem('authUser') || 'null');
+                if (!authUser) {
+                    result.innerHTML = '<div class="error">❌ No authenticated user found. Please log in.</div>';
+                    return;
+                }
+                const email = authUser.email || authUser.id || authUser._id;
+                result.innerHTML = `
+                    <div class="success">
+                        ✅ User authenticated<br>
+                        <strong>Email:</strong> ${email}<br>
+                        <strong>Name:</strong> ${authUser.name || 'N/A'}<br>
+                        <strong>ID:</strong> ${authUser.id || authUser._id || 'N/A'}
+                    </div>
+                `;
+            } catch (e) {
+                result.innerHTML = `<div class="error">❌ Error: ${e.message}</div>`;
+            }
+        }
+
+        function checkTeamMembers() {
+            const result = document.getElementById('teamResult');
+            try {
+                const team = JSON.parse(localStorage.getItem('mivent_team') || '[]');
+                if (team.length === 0) {
+                    result.innerHTML = '<div class="warning">⚠️ No team members found. Please add team members first.</div>';
+                    return;
+                }
+                
+                let html = `<div class="success">✅ Found ${team.length} team member(s):</div><ul>`;
+                team.forEach(member => {
+                    const hasEmail = member.email && /^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$/.test(member.email);
+                    html += `<li><strong>${member.name}</strong> - ${member.role}<br>Email: ${member.email || 'MISSING'} ${hasEmail ? '✅' : '❌'}</li>`;
+                });
+                html += '</ul>';
+                result.innerHTML = html;
+            } catch (e) {
+                result.innerHTML = `<div class="error">❌ Error: ${e.message}</div>`;
+            }
+        }
+
+        function checkConversations() {
+            const result = document.getElementById('convoResult');
+            try {
+                const conversations = JSON.parse(localStorage.getItem('mivent_conversations') || '[]');
+                if (conversations.length === 0) {
+                    result.innerHTML = '<div class="warning">⚠️ No conversations found.</div>';
+                    return;
+                }
+                
+                let html = `<div class="success">✅ Found ${conversations.length} conversation(s):</div><ul>`;
+                conversations.forEach(conv => {
+                    html += `<li>
+                        <strong>${conv.name}</strong> (${conv.type})<br>
+                        ID: ${conv.id}<br>
+                        Participants: ${JSON.stringify(conv.participants)}<br>
+                        Last Message: ${conv.lastMessage || 'None'}
+                    </li>`;
+                });
+                html += '</ul>';
+                result.innerHTML = html;
+            } catch (e) {
+                result.innerHTML = `<div class="error">❌ Error: ${e.message}</div>`;
+            }
+        }
+
+        function checkMessages() {
+            const result = document.getElementById('messageResult');
+            try {
+                const messages = JSON.parse(localStorage.getItem('mivent_chat_messages') || '{}');
+                const keys = Object.keys(messages);
+                if (keys.length === 0) {
+                    result.innerHTML = '<div class="warning">⚠️ No messages found.</div>';
+                    return;
+                }
+                
+                let html = `<div class="success">✅ Found messages in ${keys.length} conversation(s):</div>`;
+                keys.forEach(convId => {
+                    const convMessages = messages[convId];
+                    html += `<div style="margin: 10px 0; padding: 10px; background: #f5f5f5; border-radius: 5px;">
+                        <strong>Conversation: ${convId}</strong><br>
+                        Messages: ${convMessages.length}<br>
+                        <ul>`;
+                    convMessages.slice(-3).forEach(msg => {
+                        html += `<li>${msg.senderName}: ${msg.content || '[Media]'}</li>`;
+                    });
+                    html += '</ul></div>';
+                });
+                result.innerHTML = html;
+            } catch (e) {
+                result.innerHTML = `<div class="error">❌ Error: ${e.message}</div>`;
+            }
+        }
+
+        function clearChatData() {
+            if (confirm('Are you sure you want to clear all chat data? This cannot be undone.')) {
+                localStorage.removeItem('mivent_conversations');
+                localStorage.removeItem('mivent_chat_messages');
+                alert('Chat data cleared! Please refresh the page.');
+            }
+        }
+
+        async function runDiagnostics() {
+            const output = document.getElementById('diagnosticResults');
+            output.style.display = 'block';
+            output.innerHTML = log('Starting diagnostics...', 'info');
+
+            // Check 1: Authentication
+            output.innerHTML += log('Checking authentication...', 'info');
+            try {
+                const authUser = JSON.parse(localStorage.getItem('authUser') || 'null');
+                if (authUser && authUser.email) {
+                    output.innerHTML += log(`✅ User authenticated: ${authUser.email}`, 'success');
+                } else {
+                    output.innerHTML += log('❌ No authenticated user found', 'error');
+                }
+            } catch (e) {
+                output.innerHTML += log(`❌ Auth check failed: ${e.message}`, 'error');
+            }
+
+            // Check 2: Team members
+            output.innerHTML += log('Checking team members...', 'info');
+            try {
+                const team = JSON.parse(localStorage.getItem('mivent_team') || '[]');
+                output.innerHTML += log(`✅ Found ${team.length} team members`, 'success');
+                const noEmail = team.filter(m => !m.email).length;
+                if (noEmail > 0) {
+                    output.innerHTML += log(`⚠️ Warning: ${noEmail} team members missing email`, 'warning');
+                }
+            } catch (e) {
+                output.innerHTML += log(`❌ Team check failed: ${e.message}`, 'error');
+            }
+
+            // Check 3: Conversations
+            output.innerHTML += log('Checking conversations...', 'info');
+            try {
+                const conversations = JSON.parse(localStorage.getItem('mivent_conversations') || '[]');
+                output.innerHTML += log(`✅ Found ${conversations.length} conversations`, 'success');
+                conversations.forEach(conv => {
+                    if (!conv.participants || conv.participants.length === 0) {
+                        output.innerHTML += log(`⚠️ Conversation ${conv.id} has no participants`, 'warning');
+                    }
+                });
+            } catch (e) {
+                output.innerHTML += log(`❌ Conversation check failed: ${e.message}`, 'error');
+            }
+
+            // Check 4: Messages
+            output.innerHTML += log('Checking messages...', 'info');
+            try {
+                const messages = JSON.parse(localStorage.getItem('mivent_chat_messages') || '{}');
+                const totalMessages = Object.values(messages).reduce((sum, msgs) => sum + msgs.length, 0);
+                output.innerHTML += log(`✅ Found ${totalMessages} total messages`, 'success');
+            } catch (e) {
+                output.innerHTML += log(`❌ Message check failed: ${e.message}`, 'error');
+            }
+
+            output.innerHTML += log('Diagnostics complete!', 'success');
+        }
+
+        function testConversationQuery() {
+            alert('This requires access to Firebase. Please check the browser console in your actual Chat page for query results.');
+        }
+
+        function createTestConversation() {
+            alert('Please use the "Start New Chat" button in the actual Chat interface to create conversations.');
+        }
+
+        function sendTestMessage() {
+            alert('Please use the chat interface to send messages. This test page is for diagnostics only.');
+        }
+
+        function startMonitoring() {
+            const output = document.getElementById('monitorOutput');
+            output.style.display = 'block';
+            output.innerHTML = log('Monitoring started...', 'success');
+            
+            monitoringInterval = setInterval(() => {
+                try {
+                    const conversations = JSON.parse(localStorage.getItem('mivent_conversations') || '[]');
+                    const messages = JSON.parse(localStorage.getItem('mivent_chat_messages') || '{}');
+                    const totalMessages = Object.values(messages).reduce((sum, msgs) => sum + msgs.length, 0);
+                    
+                    output.innerHTML += log(`📊 Conversations: ${conversations.length}, Messages: ${totalMessages}`, 'info');
+                } catch (e) {
+                    output.innerHTML += log(`Error: ${e.message}`, 'error');
+                }
+            }, 3000);
+        }
+
+        function stopMonitoring() {
+            if (monitoringInterval) {
+                clearInterval(monitoringInterval);
+                monitoringInterval = null;
+                const output = document.getElementById('monitorOutput');
+                output.innerHTML += log('Monitoring stopped.', 'warning');
+            }
+        }
+    </script>
+</body>
+</html>
